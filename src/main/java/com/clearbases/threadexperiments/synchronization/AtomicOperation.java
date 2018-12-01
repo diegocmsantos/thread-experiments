@@ -11,16 +11,22 @@ public class AtomicOperation {
     private int count = 0;
 
     private synchronized void increment() {
-        for (int i = 0; i < 10000; i++) {
-            count++;
-        }
+        count++;
     }
 
     private void doWork() {
 
-        Thread t1 = new Thread(this::increment);
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 10000; i++) {
+                increment();
+            }
+        });
 
-        Thread t2 = new Thread(this::increment);
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 10000; i++) {
+                increment();
+            }
+        });
 
         t1.start();
         t2.start();

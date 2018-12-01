@@ -13,21 +13,19 @@ public class WrongAtomicOperation {
     private int count = 0;
 
     private void increment() {
-        for (int i = 0; i < 10000; i++) {
-            count++;
-        }
+        count++;
     }
 
     public void doWork() {
 
-        Thread t1 = new Thread(new Runnable() {
-            public void run() {
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 10000; i++) {
                 increment();
             }
         });
 
-        Thread t2 = new Thread(new Runnable() {
-            public void run() {
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 10000; i++) {
                 increment();
             }
         });
